@@ -38,9 +38,7 @@ constexpr float sqrt(float x)
 {
     //Square root Fixpoint iterations
     #define SQRT_FIX_ITER(guess, eps)(0.5f*((eps)/(guess)+(guess)))
-    #define SQRT_2_ITER(guess,eps)(SQRT_FIX_ITER((SQRT_FIX_ITER((guess),(eps))),(eps)))
-
-    //#define SQRT_2_ITER(guess,eps)(SQRT_FIX_ITER((SQRT_FIX_ITER((SQRT_FIX_ITER((guess),(eps)),(eps))),(eps)))
+    #define SQRT_2_ITER(guess,eps)(SQRT_FIX_ITER((SQRT_FIX_ITER((SQRT_FIX_ITER((guess),(eps))),(eps))),(eps)))
 
     constexpr float SQRT_2{1.41421356237};
     constexpr float ONE_OVER_ROOT_TWO{0.707106781186547524};
