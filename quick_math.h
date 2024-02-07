@@ -15,6 +15,7 @@ inline constexpr float POW_TWO_A_2{9.3838479280898715755293462173177e-4};
 inline constexpr float HALF_ROOT_TWO{0.70710678118654};
 inline constexpr float QUARTER_PI{0.78539816339744830961566};
 inline constexpr size_t PRIMITIVE_FACTORIALS[]={1,1,2,6,24,120,720,5760,51840,518400};
+inline constexpr float ONE_OVER_SQRT_2PI{0.398942280401f};
 
 #define GetFloat_Data_Exponent(f) ((*((unsigned int*)&(f)) & EXP_FLOAT_MASK)>>23)
 #define AddFloatExponent(f,y) ((((GetFloat_Data_Exponent((f))+(y))<<23)+GetFloat_Data_Mantissa(f)))
@@ -34,6 +35,11 @@ constexpr float QUICK_2_TO_EPSILON(float epsilon)
 #define GetFloat_Data_Mantissa(f)((*((unsigned int*)&(f)) & 0x007fffff))
 #define GetFloatExponent(f) (((*((unsigned int*)&(f)) & 0x7f800000)>>23)-127)
 
+
+constexpr float square(float x)
+{
+    return x*x; 
+}
 constexpr float sqrt(float x)
 {
     //Square root Fixpoint iterations
@@ -250,6 +256,34 @@ constexpr int heaviside(float x)
 {
     return SignBit(x); 
 }
+constexpr int step(float x)
+{
+    return SignBit(x); 
+}
+constexpr float cron_delta(float x)
+{
+    if(x==0)return ((float)(1e+300*1e+300));
+    return  0;
+}
+constexpr float normal_distribution(float x, const float mean=0, const float std_dev=1)
+{
+    return ONE_OVER_SQRT_2PI*(1/std_dev)*QM::exp(-0.5f*square((x-mean)/std_dev));
+}
+constexpr float gaussian(float x)
+{
+    return ONE_OVER_SQRT_2PI*QM::exp(-0.5f*x*x);
+}
+constexpr float gd(float x)
+{
+    return 2*QM::atan(QM::tanh(0.5f*x));
+}
+constexpr float sinc(float x)
+{
+    return QM::sin(x)/x; 
+}
+
+
+
 
 
 }
