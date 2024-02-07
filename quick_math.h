@@ -281,8 +281,14 @@ constexpr float sinc(float x)
 {
     return QM::sin(x)/x; 
 }
-
-
+constexpr float length(float x, float y)
+{
+    return QM::sqrt(x*x+y*y);
+}
+constexpr float length(float x, float y, float z)
+{
+    return QM::sqrt(x*x+y*y+z*z);
+}
 
 
 
