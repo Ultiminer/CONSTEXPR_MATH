@@ -5,10 +5,8 @@
 #include "nice_cpp_macros.h"    
 int main(int argc, char**argv)
 {
-    float x=8;
-    int l=NCM_GetBitL(x,30,8);
-    std::cout<<l-127;
-
+    float x=-10;
+    std::cout<<QM::sign(x)<<std::endl;
 
     return 0;
 }

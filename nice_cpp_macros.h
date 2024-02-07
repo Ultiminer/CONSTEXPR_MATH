@@ -9,7 +9,7 @@
 #define NCM_POW2(x) ((1<<23)*(127+(x)))
 #define NCM_FLOAT_MULTIPLIER(x) (NCM_FloatMantissa((x))+(1<<23)*127)
 #define NCM_Swap(x,y)((x)=(x)+(y); (y)=(x)-(y);(x)=(x)-(y);)
-#define NCM_SignBit(x) (((*(unsigned int*)&(x))&(1<<31))>>31)
+#define NCM_SignBit(x) (((*(unsigned int*)&(x)))>>31)
 #define NCM_GetBit(x,bitPos) ((((*(unsigned int*)&(x))&(1<<(bitPos))))>>(bitPos))
 #define NCM_GetBitL(x,bitPos, length) ((((*(unsigned int*)&(x))<<(31-bitPos)))>>(32-length))
 

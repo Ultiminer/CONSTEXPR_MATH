@@ -170,11 +170,86 @@ constexpr float coth(float x)
     const float exp_2_x_{QM::exp(x+x)};
     return 0.5f*((exp_2_x_-1)/(exp_2_x_+1));
 }
+constexpr float atan(float x)
+{
+    if(x>1)return x/(1+0.28*x*x);
+    if(x<-1)return QUARTER_PI*2-x/(x*x+0.28);
 
+    return -QUARTER_PI*2-x/(x*x+0.28);
+}
+constexpr float asin(float x)
+{
+    return atan(x/(QM::sqrt(1-x*x))); 
+}
+constexpr float acos(float x)
+{
+    return QUARTER_PI*2-atan(x/(QM::sqrt(1-x*x))); 
+}
+constexpr float max(float x, float y)
+{
+    if(x>y)return x;
+    return y; 
+}
+constexpr float min(float x, float y)
+{
+    if(x<y)return x;
+    return y; 
+}
+constexpr size_t max(size_t x, size_t y)
+{
+    if(x>y)return x;
+    return y; 
+}
+constexpr size_t min(size_t x, size_t y)
+{
+    if(x<y)return x;
+    return y; 
+}
+constexpr size_t gcd(const size_t m, const size_t n)
+{     
+    size_t reduction=1; 
+    while(true)
+    {
+        if(m%2+n%2==0)reduction*=2;
+        else if(m%3+n%3==0)reduction*=3; 
+        else break; 
+    }
+    const size_t Kmin=QM::min(m,n)/reduction;
+    for(size_t g=Kmin; g>1; --g)
+    {
+        if(m%g+n%g==0)return g*reduction;
+    }
 
+    return 1*reduction; 
+}
+/*Gives the angle of a rise over run situation*/
+constexpr float arg(float y, float x)
+{
+    if(x>0)return QM::atan(y/x);
+    if(x<0)
+    {
+        if(y<0)return atan(y/x)-QUARTER_PI*4;
+        return atan(y/x)+QUARTER_PI*4; 
+    }
+    if(y>0)
+    return QUARTER_PI*2;
 
+    return -QUARTER_PI*2;
+}
+#define SignBit(x) (((*(unsigned int*)&(x)))>>31)
 
-
+constexpr int sign(float x)
+{
+    return 1-2*SignBit(x); 
+}
+constexpr int sign(int x)
+{
+    return 1-2*SignBit(x); 
+}
+constexpr int heaviside(float x)
+{
+    return SignBit(x); 
+}
 
 
 }
