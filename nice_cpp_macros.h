@@ -12,6 +12,7 @@
 #define NCM_SignBit(x) (((*(unsigned int*)&(x)))>>31)
 #define NCM_GetBit(x,bitPos) ((((*(unsigned int*)&(x))&(1<<(bitPos))))>>(bitPos))
 #define NCM_GetBitL(x,bitPos, length) ((((*(unsigned int*)&(x))<<(31-bitPos)))>>(32-length))
-
+#define NCM_SetBit(x,bitPos) ((x)|= (1 << (bitPos)))
+#define NCM_UnSetBit(x,bitPos) ((x)&= ~(1 << (bitPos)))
 
 #endif
