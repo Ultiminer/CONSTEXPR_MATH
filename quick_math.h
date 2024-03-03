@@ -279,6 +279,7 @@ constexpr float gd(float x)
 }
 constexpr float sinc(float x)
 {
+    if(x==0)return 1;
     return QM::sin(x)/x; 
 }
 constexpr float length(float x, float y)
@@ -289,6 +290,20 @@ constexpr float length(float x, float y, float z)
 {
     return QM::sqrt(x*x+y*y+z*z);
 }
+
+/*Triangle math*/
+constexpr float triangle_height_on_a(float a, float b, float c)
+{
+    return 0.5f*(1/a)*QM::sqrt((a+b+c)*(a+b-c)*(a-b+c)*(-a+b+c));
+}
+constexpr float triangle_area(float a, float b, float c)
+{
+    return 0.5f*a*QM::triangle_height_on_a(a,b,c);
+}
+
+
+
+
 
 
 
