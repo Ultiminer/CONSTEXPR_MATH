@@ -98,11 +98,8 @@ constexpr float mod(float x, float m)
 }
 constexpr float QUICK_SIN_FIRST_QUARTER(float x)
 {   
-    if(x<0.24)return x; 
-    if(x>1.45)return 1;
-
-    const float diff=x-QUARTER_PI;
-    return HALF_ROOT_TWO*(1+diff*(1-diff*(0.5f-0.16667f*diff)));
+   if(x<0.947)return x-(x*x*x)/6;
+   return 1-0.5f*(x-QUARTER_PI*2)*(x-QUARTER_PI*2); 
 }
 constexpr float sin(float x)
 {
