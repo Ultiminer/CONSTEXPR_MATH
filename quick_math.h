@@ -289,7 +289,26 @@ constexpr float length(float x, float y, float z)
 {
     return QM::sqrt(x*x+y*y+z*z);
 }
-
+constexpr float smoothstep(float x)
+{
+    const float __EXP{QM::exp(x)};
+    return (__EXP-1)/(__EXP+1);
+}
+constexpr float smoothstep(float x,float k)
+{
+    const float __EXP{QM::exp(k*x)};
+    return (__EXP-1)/(__EXP+1);
+}
+constexpr float smoothpos(float x)
+{
+    const float __EXP{QM::exp(x)};
+    return (__EXP)/(__EXP+1);
+}
+constexpr float smoothpos(float x,float k)
+{
+    const float __EXP{QM::exp(k*x)};
+    return (__EXP)/(__EXP+1);
+}
 /*Triangle math*/
 constexpr float triangle_height_on_a(float a, float b, float c)
 {
@@ -341,6 +360,8 @@ constexpr QM::Complex ln(const QM::Complex& num)
 {
     return QM::ln(QM::length(num))+QM::i_unit*QM::arg(num);
 }
+
+
 
 }
 
