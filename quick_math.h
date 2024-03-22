@@ -253,11 +253,11 @@ constexpr int sign(int x)
 }
 constexpr int heaviside(float x)
 {
-    return SignBit(x); 
+    return !SignBit(x); 
 }
-constexpr int step(float x)
+constexpr int step(float x,float a, float b)
 {
-    return SignBit(x); 
+    return heaviside(x-a)*heaviside(b-x); 
 }
 constexpr float cron_delta(float x)
 {
@@ -309,6 +309,12 @@ constexpr float smoothpos(float x,float k)
     const float __EXP{QM::exp(k*x)};
     return (__EXP)/(__EXP+1);
 }
+/*returns x if and only if x ist positive*/
+constexpr float relu(float x)
+{
+    return (!SignBit(x))*x;
+}  
+
 /*Triangle math*/
 constexpr float triangle_height_on_a(float a, float b, float c)
 {
