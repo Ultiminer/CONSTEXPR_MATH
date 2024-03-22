@@ -1,10 +1,22 @@
 #ifndef QUICK_MATH_H_
 #define QUICK_MATH_H_
+/*
+Simple constexpr Math_Header_Lib
+IMPORTANT! 
+define: QM_EXLUDE_COMPLEX or QM_PRIMITIVE 
+-if you wish to exlude operations of complex numbers
+*/
+
+#ifdef QM_PRIMITIVE
+#define QM_EXCLUDE_COMPLEX
+#endif
+#ifndef QM_EXCLUDE_COMPLEX
 #include "qm_complex.h"
+#endif
 
 
 namespace QM{
-    
+
 inline constexpr float EULER_NUM{2.7182818284590452};
 inline constexpr float LOG_2_EULER_NUM{1.44269504088896340735};
 inline constexpr unsigned int EXP_FLOAT_MASK{0x7f800000};
@@ -36,6 +48,12 @@ constexpr float QUICK_2_TO_EPSILON(float epsilon)
 
 #define GetFloat_Data_Mantissa(f)((*((unsigned int*)&(f)) & 0x007fffff))
 #define GetFloatExponent(f) (((*((unsigned int*)&(f)) & 0x7f800000)>>23)-127)
+
+template<typename T>
+inline void swap(T& x, T& y)
+{
+    x+=y; y=x-y; x-=y; 
+}
 
 
 constexpr float square(float x)
@@ -251,14 +269,22 @@ constexpr int sign(int x)
 {
     return 1-2*SignBit(x); 
 }
+/*0, when x is negative; 
+1, if x is positive*/
 constexpr int heaviside(float x)
 {
     return !SignBit(x); 
 }
+/*returns true if x lies in the interval {a,b};
+zero otherwise
+*/
 constexpr int step(float x,float a, float b)
 {
     return heaviside(x-a)*heaviside(b-x); 
 }
+/*returns infinity if x is equal to zero;
+if x is any other value, the return value is zero
+*/
 constexpr float cron_delta(float x)
 {
     if(x==0)return ((float)(1e+300*1e+300));
@@ -272,10 +298,12 @@ constexpr float gaussian(float x)
 {
     return ONE_OVER_SQRT_2PI*QM::exp(-0.5f*x*x);
 }
+/*Returns the "gudamannian" of x*/
 constexpr float gd(float x)
 {
     return 2*QM::atan(QM::tanh(0.5f*x));
 }
+/*Returns the sin(x)/x*/
 constexpr float sinc(float x)
 {
     if(x==0)return 1;
@@ -289,27 +317,41 @@ constexpr float length(float x, float y, float z)
 {
     return QM::sqrt(x*x+y*y+z*z);
 }
+/*Maps x smoothly into the interval (-1,1)*/
 constexpr float smoothstep(float x)
 {
     const float __EXP{QM::exp(x)};
     return (__EXP-1)/(__EXP+1);
 }
+/*Maps x smoothly into the interval (-1,1), k controls the "curvature" of the mapping*/
 constexpr float smoothstep(float x,float k)
 {
     const float __EXP{QM::exp(k*x)};
     return (__EXP-1)/(__EXP+1);
 }
+/*Maps x smoothly into the interval (0,1)*/
 constexpr float smoothpos(float x)
 {
     const float __EXP{QM::exp(x)};
     return (__EXP)/(__EXP+1);
 }
+/*Maps x smoothly into the interval (0,1), k controls the "curvature" of the mapping*/
 constexpr float smoothpos(float x,float k)
 {
     const float __EXP{QM::exp(k*x)};
     return (__EXP)/(__EXP+1);
 }
-/*returns x if and only if x ist positive*/
+/*Under the assumption that the value of x lies between aSrc and bSrc it is mapped between aDest and bDest*/
+constexpr float map_interval(float x, float aSrc,float bSrc, float aDest, float bDest)
+{
+    return aDest+(x-aSrc)*(bDest-aDest)/(bSrc-aSrc); 
+}
+/*The range of {-inf,+inf} is mapped into an interval*/
+constexpr float map_interval(float x,float aDest, float bDest)
+{
+    return aDest+QM::smoothpos(x)*(bDest-aDest); 
+}
+/*returns x if and only if x is positive*/
 constexpr float relu(float x)
 {
     return (!SignBit(x))*x;
@@ -325,6 +367,9 @@ constexpr float triangle_area(float a, float b, float c)
     return 0.5f*a*QM::triangle_height_on_a(a,b,c);
 }
 
+
+
+#ifndef QM_EXCLUDE_COMPLEX
 constexpr QM::Complex exp(const QM::Complex& num)
 {
     const float expEval{QM::exp(num.real)};
@@ -366,7 +411,7 @@ constexpr QM::Complex ln(const QM::Complex& num)
 {
     return QM::ln(QM::length(num))+QM::i_unit*QM::arg(num);
 }
-
+#endif
 
 
 }
