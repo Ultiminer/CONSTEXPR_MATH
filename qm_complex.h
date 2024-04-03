@@ -1,6 +1,8 @@
 #ifndef QM_COMPLEX_H_
 #define QM_COMPLEX_H_
 #include <string>
+#include "quick_math.h"
+
 
 namespace QM{
 struct Complex
@@ -106,6 +108,47 @@ constexpr Complex operator/(const Complex& a,const Complex& b)
 
 inline constexpr Complex i_unit=QM::complex(0,1);
 
+constexpr QM::Complex exp(const QM::Complex& num)
+{
+    const float expEval{QM::exp(num.real)};
+    return {expEval*QM::cos(num.imag),expEval*QM::sin(num.imag)};
+}
+constexpr float abs(const QM::Complex& num)
+{
+    return QM::sqrt(num.real*num.real+num.imag*num.imag);
+}
+constexpr QM::Complex square(const QM::Complex& num)
+{
+    return num*num;
+}
+constexpr QM::Complex sin(const QM::Complex& num)
+{
+    return (-0.5f*i_unit)*(exp(num*QM::i_unit)-exp((-1)*num*QM::i_unit));
+}
+constexpr QM::Complex cos(const QM::Complex& num)
+{
+    return (0.5f)*(exp(num*QM::i_unit)+exp((-1)*num*QM::i_unit));
+}
+constexpr QM::Complex tan(const QM::Complex& num)
+{
+    return QM::sin(num)/QM::cos(num);
+}
+constexpr float arg(const QM::Complex& num)
+{
+    return QM::arg(num.imag,num.real);
+}
+constexpr QM::Complex sqrt(const QM::Complex& num)
+{
+    return QM::pow(num.imag*num.imag+num.real*num.real,0.25)*exp(QM::i_unit*QM::arg(num)*0.5f);
+}
+constexpr float length(const QM::Complex& num)
+{
+    return QM::abs(num);
+}
+constexpr QM::Complex ln(const QM::Complex& num)
+{
+    return QM::ln(QM::length(num))+QM::i_unit*QM::arg(num);
+}
 
 
 }

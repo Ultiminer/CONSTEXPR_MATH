@@ -1,22 +1,9 @@
 #ifndef QUICK_MATH_H_
 #define QUICK_MATH_H_
-/*
-Simple constexpr Math_Header_Lib
-IMPORTANT! 
-define: QM_EXLUDE_COMPLEX or QM_PRIMITIVE 
--if you wish to exlude operations of complex numbers
-*/
 
-#ifdef QM_PRIMITIVE
-#define QM_EXCLUDE_COMPLEX
-#endif
-#ifndef QM_EXCLUDE_COMPLEX
-#include "qm_complex.h"
-#endif
 
 
 namespace QM{
-
 inline constexpr float EULER_NUM{2.7182818284590452};
 inline constexpr float LOG_2_EULER_NUM{1.44269504088896340735};
 inline constexpr unsigned int EXP_FLOAT_MASK{0x7f800000};
@@ -366,52 +353,6 @@ constexpr float triangle_area(float a, float b, float c)
 {
     return 0.5f*a*QM::triangle_height_on_a(a,b,c);
 }
-
-
-
-#ifndef QM_EXCLUDE_COMPLEX
-constexpr QM::Complex exp(const QM::Complex& num)
-{
-    const float expEval{QM::exp(num.real)};
-    return {expEval*QM::cos(num.imag),expEval*QM::sin(num.imag)};
-}
-constexpr float abs(const QM::Complex& num)
-{
-    return QM::sqrt(num.real*num.real+num.imag*num.imag);
-}
-constexpr QM::Complex square(const QM::Complex& num)
-{
-    return num*num;
-}
-constexpr QM::Complex sin(const QM::Complex& num)
-{
-    return (-0.5f*i_unit)*(exp(num*QM::i_unit)-exp((-1)*num*QM::i_unit));
-}
-constexpr QM::Complex cos(const QM::Complex& num)
-{
-    return (0.5f)*(exp(num*QM::i_unit)+exp((-1)*num*QM::i_unit));
-}
-constexpr QM::Complex tan(const QM::Complex& num)
-{
-    return QM::sin(num)/QM::cos(num);
-}
-constexpr float arg(const QM::Complex& num)
-{
-    return QM::arg(num.imag,num.real);
-}
-constexpr QM::Complex sqrt(const QM::Complex& num)
-{
-    return QM::pow(num.imag*num.imag+num.real*num.real,0.25)*exp(QM::i_unit*QM::arg(num)*0.5f);
-}
-constexpr float length(const QM::Complex& num)
-{
-    return QM::abs(num);
-}
-constexpr QM::Complex ln(const QM::Complex& num)
-{
-    return QM::ln(QM::length(num))+QM::i_unit*QM::arg(num);
-}
-#endif
 
 
 }

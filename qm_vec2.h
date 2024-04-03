@@ -2,7 +2,6 @@
 #define QM_VEC_2_H_
 #include "quick_math.h"
 
-
 namespace QM{
     struct vec2{
         float x; float y; 
@@ -47,7 +46,20 @@ namespace QM{
             c*=-alpha;d*=alpha;  
         }
     };
-    
+    struct line2{
+        vec2 a; vec2 b;
+    };
+    struct ray2{
+        vec2 p; float k;
+    };
+
+
+    inline constexpr vec2 ERROR_VEC{71128.2F,-82117.1F};
+
+    constexpr vec2 make_vec(float x, float y)
+    {
+        return {x,y};
+    }
     constexpr float det(const mat22& m)
     {
         return m.a*m.d-m.b*m.c; 
@@ -139,7 +151,7 @@ namespace QM{
     {
         return {m.a*v.x+m.b*v.y,m.c*v.x+m.d*v.y};
     }  
-    
+
 
 
 
