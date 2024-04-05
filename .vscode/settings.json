@@ -47,6 +47,13 @@
         "list": "cpp",
         "unordered_map": "cpp",
         "vector": "cpp",
-        "xhash": "cpp"
+        "xhash": "cpp",
+        "complex": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "sstream": "cpp",
+        "string": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp"
     }
 }

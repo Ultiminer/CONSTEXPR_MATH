@@ -1,7 +1,12 @@
 #ifndef NICE_CPP_MACROS_H_
 #define NICE_CPP_MACROS_H_
 
-/*Combining the wisdom acquired from the creation of the quick_math header into a helper library*/
+/*
+macros for bit manipulation 
+use:
+NCM + _ + <MACRO_NAME>
+*/
+
 
 #define NCM_LENGTH(x) ((sizeof(x))/(sizeof(*(x))))
 #define NCM_FloatExponent(f) (((*((unsigned int*)&(f)) & 0x7f800000)>>23)-127)
