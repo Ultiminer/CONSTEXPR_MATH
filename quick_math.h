@@ -1,6 +1,6 @@
 #ifndef QUICK_MATH_H_
 #define QUICK_MATH_H_
-
+#include <cstdint>
 
 
 namespace QM{

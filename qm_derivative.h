@@ -1,5 +1,5 @@
-#ifndef QM_ANALYSIS_H_
-#define QM_ANALYSIS_H_
+#ifndef QM_DERIVATIVE_H_
+#define QM_DERIVATIVE_H_
 #include "quick_math.h"
 #include <array>
 #include <functional>
@@ -45,11 +45,19 @@ constexpr FRetVal operator+(const FRetVal& A, FCONST c)
 {
     return {A.val+c,A.slope}; 
 }
+constexpr FRetVal operator+(FCONST c, const FRetVal& A)
+{
+    return {A.val+c,A.slope}; 
+}
 constexpr FRetVal operator-(const FRetVal& A, FCONST c)
 {
     return {A.val-c,A.slope}; 
 }
 constexpr FRetVal operator*(const FRetVal& A, FCONST c)
+{
+    return {A.val*c,A.slope*c}; 
+}
+constexpr FRetVal operator*(FCONST c,const FRetVal& A)
 {
     return {A.val*c,A.slope*c}; 
 }
@@ -121,6 +129,46 @@ constexpr float finite_difference(const std::function<float(float)>& fun, float 
     const float eps{0.5f/N};
     return N*fun(param+eps)-N*fun(param-eps); 
 }
+
+template <size_t N>
+constexpr float newton_iteration(const std::function<FRetVal(FRetVal)>& fun, float guess)
+{
+    for(size_t i=0; i<N; ++i)
+    {
+        const FRetVal y=fun(guess);
+        guess-=y.val/y.slope;
+    } 
+
+    return guess; 
+}
+template <size_t N>
+constexpr FRetVal fixpoint_iteration(const std::function<FRetVal(FRetVal)>& fun, FRetVal guess)
+{
+    for(size_t i=0; i<N; ++i)guess=fun(guess);
+
+    return guess; 
+}
+template <size_t N>
+constexpr float fixpoint_iteration(const std::function<float(float)>& fun, float guess)
+{
+    for(size_t i=0; i<N; ++i)guess=fun(guess);
+
+    return guess; 
+}
+template <size_t N>
+constexpr float newton_iteration(const std::function<float(float)>& fun, float guess)
+{
+    for(size_t i=0; i<N; ++i)guess-=fun(guess)/finite_difference<1000>(fun,guess);
+    
+
+    return guess; 
+}
+
+
+
+
+
+
 
 
 }
