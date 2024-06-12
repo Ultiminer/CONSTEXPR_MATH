@@ -28,6 +28,7 @@ namespace QM{
             x*=-1; 
         }
     };
+
     struct polarvec2{
         float r; float theta; 
     };
@@ -54,7 +55,6 @@ namespace QM{
     };
 
 
-    inline constexpr vec2 ERROR_VEC{71128.2F,-82117.1F};
 
     constexpr vec2 make_vec(float x, float y)
     {

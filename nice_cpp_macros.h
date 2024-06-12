@@ -20,4 +20,6 @@ NCM + _ + <MACRO_NAME>
 #define NCM_SetBit(x,bitPos) ((x)|= (1 << (bitPos)))
 #define NCM_UnSetBit(x,bitPos) ((x)&= ~(1 << (bitPos)))
 
+
+
 #endif

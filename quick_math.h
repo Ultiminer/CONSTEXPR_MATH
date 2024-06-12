@@ -18,6 +18,7 @@ inline constexpr float QUARTER_PI{0.78539816339744830961566};
 inline constexpr size_t PRIMITIVE_FACTORIALS[]={1,1,2,6,24,120,720,5760,51840,518400};
 inline constexpr float ONE_OVER_SQRT_2PI{0.398942280401f};
 
+ 
 #define GetFloat_Data_Exponent(f) ((*((unsigned int*)&(f)) & EXP_FLOAT_MASK)>>23)
 #define AddFloatExponent(f,y) ((((GetFloat_Data_Exponent((f))+(y))<<23)+GetFloat_Data_Mantissa(f)))
 
@@ -354,6 +355,14 @@ constexpr float triangle_area(float a, float b, float c)
     return 0.5f*a*QM::triangle_height_on_a(a,b,c);
 }
 
+
+/*Special approximate Antiderivatives*/
+constexpr float guassian_quadrature_ap(float std_dev, float mean, float a, float b)
+{
+    const float ALPHA{0.79788456f/std_dev};
+
+    return 0.5f*(QM::tanh(ALPHA*(b-mean))-QM::tanh(ALPHA*(a-mean)));
+}
 
 }
 
